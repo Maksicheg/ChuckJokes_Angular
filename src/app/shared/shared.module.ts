@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -15,10 +16,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import { JokeCardComponent } from './../components/joke-card/joke-card.component';
+import { DragDropDirective } from './directives/drag-drop.directive';
 import { DateToHoursPipe } from './pipes/date-to-hours.pipe';
 
 @NgModule({
-  declarations: [JokeCardComponent, DateToHoursPipe],
+  declarations: [JokeCardComponent, DateToHoursPipe, DragDropDirective],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -34,10 +36,12 @@ import { DateToHoursPipe } from './pipes/date-to-hours.pipe';
     MatCardModule,
     MatTooltipModule,
     MatDividerModule,
+    MatExpansionModule,
   ],
   exports: [
     JokeCardComponent,
     DateToHoursPipe,
+    DragDropDirective,
     ReactiveFormsModule,
     CommonModule,
     RouterModule,
@@ -53,6 +57,7 @@ import { DateToHoursPipe } from './pipes/date-to-hours.pipe';
     MatTooltipModule,
     MatToolbarModule,
     MatDividerModule,
+    MatExpansionModule,
   ],
 })
 export class SharedModule {}

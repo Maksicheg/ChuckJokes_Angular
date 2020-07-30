@@ -16,7 +16,7 @@
     <input matInput placeholder="Ex. Sinyuk" type="text" formControlName="lastName">
   </mat-form-field>
 
-  <mat-form-field class="form_full-width">
+  <mat-form-field class="form_full-width" *ngIf="!resetPasswordMode">
     <mat-label>Email</mat-label>
     <input matInput placeholder="test@example.com" type="email" formControlName="email">
     <mat-error *ngIf="form.get('email').hasError('email') && !form.get('email').hasError('required')">
@@ -27,7 +27,7 @@
     </mat-error>
   </mat-form-field>
 
-  <mat-form-field class="form_full-width">
+  <mat-form-field class="form_full-width" *ngIf="!forgotPasswordMode">
     <mat-label>Password</mat-label>
     <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password">
     <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'"
@@ -42,6 +42,25 @@
     </mat-error>
   </mat-form-field>
 
+  <mat-form-field class="form_full-width" *ngIf="!forgotPasswordMode && resetPasswordMode">
+    <mat-label>Confirm Password</mat-label>
+    <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="confirmPassword">
+    <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'"
+      [attr.aria-pressed]="hidePassword" type="button">
+      <mat-icon id="password-icon">{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </button>
+    <mat-error *ngIf="form.get('confirmPassword').hasError('required')">
+      Password is <strong>required</strong>
+    </mat-error>
+    <mat-error *ngIf="form.get('confirmPassword').hasError('mustMatch')">
+      Passwords should <strong>match</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <div class="form_full-width tal" *ngIf="!forgotPasswordMode && !isRegisterMode && !resetPasswordMode">
+    <a routerLink="/forgot-password">I forgot my password</a>
+  </div>
+
   <mat-form-field class="form_full-width" *ngIf="isRegisterMode">
     <mat-label>Roles</mat-label>
     <mat-select formControlName="roles">
@@ -51,6 +70,9 @@
 
   <div class="form_full-width form_center">
     <button *ngIf="isRegisterMode" mat-raised-button color="primary" type="submit">Register</button>
-    <button *ngIf="!isRegisterMode" mat-raised-button color="primary" type="submit">Login</button>
+    <button *ngIf="!isRegisterMode && !forgotPasswordMode && !resetPasswordMode" mat-raised-button color="primary"
+      type="submit">Login</button>
+    <button *ngIf="forgotPasswordMode || resetPasswordMode" mat-raised-button color="primary" type="submit">Reset
+      Password</button>
   </div>
 </form>

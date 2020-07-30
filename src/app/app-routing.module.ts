@@ -33,6 +33,20 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'forgot-password',
+    loadChildren: () =>
+      import(
+        './components/pages/auth/forgot-password/forgot-password.module'
+      ).then((m) => m.ForgotPasswordModule),
+  },
+  {
+    path: 'reset-password',
+    loadChildren: () =>
+      import(
+        './components/pages/auth/reset-password/reset-password.module'
+      ).then((m) => m.ResetPasswordModule),
+  },
+  {
     path: 'create-joke',
     loadChildren: () =>
       import(

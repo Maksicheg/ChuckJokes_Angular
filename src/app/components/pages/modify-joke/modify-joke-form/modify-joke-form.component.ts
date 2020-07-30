@@ -1,17 +1,16 @@
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ImageModel } from './../../../../shared/models/image.model';
 import {
-  JokeModel,
   CategoryModel,
+  JokeModel,
 } from './../../../../shared/models/joke.model';
 import { JokesService } from './../../../../shared/services/jokes.service';
-
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  FormControl,
-} from '@angular/forms';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-modify-joke-form',
@@ -35,8 +34,8 @@ export class ModifyJokeFormComponent implements OnInit {
   public jokeModel: JokeModel;
   public form: FormGroup;
   public categories: CategoryModel[];
-  private imageData: ImageModel[] = [];
-  private fileList: FileList;
+  public fileList: FileList;
+  public panelOpenState = false;
   private imagesData = [];
 
   constructor(
@@ -74,7 +73,6 @@ export class ModifyJokeFormComponent implements OnInit {
         Validators.min(1),
       ]);
       this.form.addControl('id', idControl);
-      this.imageData = this.joke.imageUrls;
     }
   }
 
@@ -88,9 +86,9 @@ export class ModifyJokeFormComponent implements OnInit {
     }
   }
 
-  public onChange(event): void {
-    this.fileList = event.target.files;
-    Array.from(this.fileList).map((file: File) => {
+  public onChange(fileList: FileList): void {
+    this.fileList = fileList;
+    Array.from(fileList).map((file: File) => {
       const fileExtension = file.name.split('.').pop();
       this.jokesService
         .getImageUrl(fileExtension)
@@ -98,29 +96,5 @@ export class ModifyJokeFormComponent implements OnInit {
           this.imagesData.push({ imageData, file })
         );
     });
-
-    // this.jokesService
-    //   .getImageUrl(fileExtension)
-    //   .subscribe((imageData: ImageModel) => {
-    //     this.jokesService
-    //       .uploadImage(imageData.imageUploadUrl, file)
-    //       .subscribe(() => {
-    //         this.imageNames.push(imageData.imageName);
-    //       });
-    //   });
-    // let arrayBuffer: string | ArrayBuffer;
-    // const reader = new FileReader();
-    // reader.readAsDataURL(file);
-    // reader.onload = () => {
-    //   // when file has loaded
-    //   arrayBuffer = reader.result;
-    // };
-    // this.jokesService
-    //   .getImageUrl(fileExtension)
-    //   .subscribe((imageData: ImageModel) => {
-    //     this.jokesService
-    //       .uploadImage(imageData.imageUploadUrl, arrayBuffer)
-    //       .subscribe((response) => console.log(response));
-    //   });
   }
 }

@@ -12,9 +12,28 @@
     <mat-error *ngIf="form.get('value').invalid">You must enter a value</mat-error>
   </mat-form-field>
 
-  <div class="form__field">
-    <input type="file" formControlName="imageNames" (change)="onChange($event)" multiple>
-  </div>
+  <mat-expansion-panel class="mat-elevation-z0" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Joke images
+      </mat-panel-title>
+      <mat-panel-description>
+        Click to {{panelOpenState ? 'close' : 'add'}} images
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div class="form__field upload-file__container" appDragDrop (fileDropped)="onChange($event)">
+      <p class="form__field form__field_center">Drag and drop your images here:</p>
+      <input hidden type="file" #fileInput formControlName="imageNames" (change)="onChange($event.target.files)"
+        multiple>
+      <div class="form__field form__field_center browse">
+        <p>or</p>
+        <button mat-stroked-button color="accent" (click)="fileInput.click()" type="button">Browse for file</button>
+      </div>
+    </div>
+    <div class="files-list" *ngFor="let file of fileList">
+      <span> {{ file.name }} </span>
+    </div>
+  </mat-expansion-panel>
 
   <mat-form-field>
     <mat-label>Categories</mat-label>

@@ -1,12 +1,13 @@
-import { AuthInterface } from './../../../../shared/interfaces/auth.interface';
-import { Role } from 'src/app/shared/models/user.model';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
-  FormGroup,
   FormBuilder,
-  Validators,
   FormControl,
+  FormGroup,
+  Validators,
 } from '@angular/forms';
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Role } from 'src/app/shared/models/user.model';
+import { AuthInterface } from './../../../../shared/interfaces/auth.interface';
+import { ComparePassword } from './../../../../shared/validators/password-compare.validator';
 
 @Component({
   selector: 'app-auth-form',
@@ -18,6 +19,8 @@ export class AuthFormComponent implements OnInit {
   public role = Role;
   public hidePassword = true;
   @Input() isRegisterMode: boolean;
+  @Input() forgotPasswordMode: boolean;
+  @Input() resetPasswordMode: boolean;
   @Output() submitForm = new EventEmitter<AuthInterface>();
 
   constructor(private formBuilder: FormBuilder) {}
@@ -41,6 +44,20 @@ export class AuthFormComponent implements OnInit {
         new FormControl('', [Validators.minLength(2)])
       );
       this.form.addControl('roles', new FormControl(null));
+    }
+    if (this.forgotPasswordMode) {
+      this.form.removeControl('password');
+    }
+    if (this.resetPasswordMode) {
+      this.form = this.formBuilder.group(
+        {
+          password: ['', [Validators.required, Validators.minLength(6)]],
+          confirmPassword: ['', Validators.required],
+        },
+        {
+          validator: ComparePassword('password', 'confirmPassword'),
+        }
+      );
     }
   }
 

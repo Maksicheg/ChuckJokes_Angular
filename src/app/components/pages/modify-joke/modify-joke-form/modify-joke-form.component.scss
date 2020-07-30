@@ -1,5 +1,15 @@
+@import "variables";
+
 .form-modify {
   padding: 0 20px;
+}
+
+mat-expansion-panel-header {
+  padding: 0 2px;
+}
+
+mat-panel-title {
+  color: rgba(0, 0, 0, 0.54);
 }
 
 .form__field {
@@ -18,4 +28,62 @@ mat-option {
 .example-additional-selection {
   opacity: 0.75;
   font-size: 0.75em;
+}
+
+.upload-file__container {
+  background-image: url("../../../../../assets/images/cloud_upload.svg");
+  background-repeat: no-repeat;
+  background-size: 100px;
+  background-position: center 40px;
+  height: 250px;
+  margin: 20px auto;
+  border: 2px dashed #1c8adb;
+  border-radius: 10px;
+  position: relative;
+
+  p {
+    margin-top: 12px;
+  }
+
+  &:hover {
+    background-color: #9ecbec;
+    opacity: 0.8;
+  }
+
+  .browse {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+  }
+}
+
+.files-list {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  flex: 1 0;
+  margin: 10px auto;
+  background: #ffffff;
+  border: 1px dashed;
+  border-radius: 12px;
+  padding: 5px;
+  color: #1c8adb;
+  span {
+    padding-left: 10px;
+  }
+
+  .delete-file {
+    background: transparent;
+    border: 1px solid transparent;
+    outline: none;
+    cursor: pointer;
+
+    &:hover img {
+      border: 1px solid $primaryTextColor;
+    }
+
+    img {
+      width: 30px;
+    }
+  }
 }
